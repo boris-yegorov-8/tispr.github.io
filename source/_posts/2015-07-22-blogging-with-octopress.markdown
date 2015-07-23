@@ -11,49 +11,47 @@ Octopress is an intuitive and simple blogging platform. The official documentati
 The setup of Octopress is described here: http://octopress.org/docs/setup/ and will not be covered in this article.
 
 ## Editorial workflow
-With a basic and probably common setup with GitHub you will have:
+With a basic GitHub setup, you will encounter:
 
 - `source` branch for source code.
 - `master` branch for generated HTML code.
 
 Basic steps (including responsible participants):
 
-- create a new blog post with Octopress (content producer)
-- submit a pull request to `source` (content producer)
-- review and merge pull request (content reviewer)
-- generate HTML code from merged code and deploy to `master` with Octopress (Continuous Integration)
+- Create a new blog post with Octopress (content producer)
+- Submit a pull request to `source` (content producer)
+- Review and merge pull request (content reviewer)
+- Continuous Integration: Generate HTML code from merged code and deploy to `master` with Octopress
 
 ## Create a new blog post
-Now let's dig into details of Octopress related steps and start with creating a blog post stub with a related
-information, including title, date and categories:
+Now let's dig into the details of Octopress and start by creating a blog post stub including the following information: Title, date and categories:
 ```
 $ rake new_post["Blogging with Octopress"]
 mkdir -p source/_posts
 Creating new post: source/_posts/2015-07-22-blogging-with-octopress.markdown
 ```
 
-Next step is to add some content to a stub, which is done by editing generated markdown file:
+The next step is to add content to a stub, which is done by editing the generated markdown file:
 ```
 $ vim source/_posts/2015-07-22-blogging-with-octopress.markdown
 ```
 
-More details on editing a post: http://octopress.org/docs/blogging/. After any update we can check how the freshly
+More details on editing a post: http://octopress.org/docs/blogging/. After any update you can check what the freshly
 baked post looks like:
 ```
 $ rake preview
 ```
 
-As soon as a new post is ready, we just commit our code and submit a pull request:
+As soon as a new post is ready, you just commit your code and submit a pull request:
 ```
 $ git add source/_posts/2015-07-22-blogging-with-octopress.markdown
 $ git commit -m "New post: Blogging with Octopress"
 ```
 
 ## Publish updated site
-Let's assume that we have a nice and beautiful Continuous Integration system, which on update of the `source` branch
-will generate new HTML code for blog and properly deploy it to `master`.
+Let's assume you have a nifty Continuous Integration system, which can on update of the `source` branch, generate a new HTML code for your blog and properly deploy it to the `master`.
 
-As soon as source code is checked out by CI, we need to setup GitHub as a deployment option, generate HTML code and deploy:
+As soon as the source code is verified by CI, you need to setup GitHub as a deployment option, generate the HTML code and deploy:
 ```
 rake setup_github_pages["https://github.com/tispr/tispr.github.io"]
 rake generate
@@ -76,9 +74,8 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 Deploy does not work.
 ```
 
-It may be related to the fact that root directory of source code and `_deploy` directory for generated HTML have
-different git repository branches set: `source` and `master` respectively. Thanks to StackOverflow this workaround was
-found:
+This may be related to the fact that the root directory of the source code and `_deploy` directory for generated HTML have
+different git repository branches set: `source` and `master` respectively. A workaround can be found in Stackoverflow:
 
 ```
 cd _deploy
@@ -87,6 +84,6 @@ cd ..
 rake deploy
 ```
 
-However, if you know a cleaner way to resolve this issue, please share in comments.
+However, if you know a cleaner way to resolve this issue, please share in the comments.
 
 Happy blogging!
