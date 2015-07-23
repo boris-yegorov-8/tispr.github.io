@@ -6,9 +6,9 @@ comments: true
 categories: Octopress
 author: Alex Voitau
 ---
-Octopress is a nice and simple blogging platform. Official documentation is great, includes examples and tutorials:
-http://octopress.org/docs/. The purpose of this article is to give a quick reference to commands that cover some basic
-worfklows. Setup of Octopress is described at http://octopress.org/docs/setup/ and is not covered here.
+Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: http://octopress.org/docs. The purpose of this article is to give a quick reference to commands that cover some basic workflows. 
+
+The setup of Octopress is described here: http://octopress.org/docs/setup/ and will not be covered in this article.
 
 ## Editorial workflow
 With a basic and probably common setup with GitHub you will have:
