@@ -24,26 +24,26 @@ Basic steps (including responsible participants):
 - Continuous Integration: Generate HTML code from merged code and deploy to `master` with Octopress
 
 ## Create a new blog post
-Now let's dig into the details of Octopress and start by creating a blog post stub including the following information: Title, date and categories:
+1. Now let's dig into the details of Octopress and start by creating a blog post stub including the following information: Title, date and categories:
 ```
 $ rake new_post["Blogging with Octopress"]
 mkdir -p source/_posts
 Creating new post: source/_posts/2015-07-22-blogging-with-octopress.markdown
 ```
 
-The next step is to add content to a stub, which is done by editing the generated markdown file:
+2. The next step is to add content to a stub, which is done by editing the generated markdown file:
 ```
 $ vim source/_posts/2015-07-22-blogging-with-octopress.markdown
 ```
 
 More details on editing a post can be found here: http://octopress.org/docs/blogging/. 
 
-After any update you can check what your freshly-baked post looks like:
+3. After any update you can check what your freshly-baked post looks like:
 ```
 $ rake preview
 ```
 
-As soon as a new post is ready, you just commit your code and submit a pull request:
+4. As soon as a new post is ready, you just commit your code and submit a pull request:
 ```
 $ git add source/_posts/2015-07-22-blogging-with-octopress.markdown
 $ git commit -m "New post: Blogging with Octopress"
