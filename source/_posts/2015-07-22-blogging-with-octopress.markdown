@@ -36,7 +36,7 @@ The next step is to add content to a stub, which is done by editing the generate
 $ vim source/_posts/2015-07-22-blogging-with-octopress.markdown
 ```
 
-More details on editing a post: http://octopress.org/docs/blogging/. After any update you can check what the freshly
+More details on editing a post can be found here: http://octopress.org/docs/blogging/. After any update you can check what the freshly
 baked post looks like:
 ```
 $ rake preview
