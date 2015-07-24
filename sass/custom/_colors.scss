@@ -9,11 +9,13 @@ $nav-bg: desaturate(lighten($header-bg, 30), 5);
 $nav-bg-back: linear-gradient(lighten($nav-bg, 8), $nav-bg, darken($nav-bg, 11));
 //$sidebar-bg: desaturate(#eceff5, 8);
 //$sidebar-link-color: saturate(#526f9a, 10);
-//$sidebar-link-color-hover: darken(#7ab662, 9);
+$sidebar-link-color-hover: #ff5000;
 $footer-bg: $header-bg;
 //$footer-bg-front: image-url('noise.png');
 $footer-bg-back: linear-gradient(lighten($footer-bg, 15), $footer-bg, darken($footer-bg, 18));
 $page-bg: #231c34;
+$link-color-hover: adjust-color($sidebar-link-color-hover, $lightness: 2, $saturation: 5) !default;
+$nav-color-hover: darken($sidebar-link-color-hover, 25) !default;
 
 
 /* To use the light Solarized highlighting theme uncomment the following line */
