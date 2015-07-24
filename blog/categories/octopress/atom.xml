@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Octopress | tispr Engineering]]></title>
+  <link href="http://engineering.tispr.com/blog/categories/octopress/atom.xml" rel="self"/>
+  <link href="http://engineering.tispr.com/"/>
+  <updated>2015-07-24T23:28:02+00:00</updated>
+  <id>http://engineering.tispr.com/</id>
+  <author>
+    <name><![CDATA[BuddyHopp, Inc.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Blogging With Octopress]]></title>
+    <link href="http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress/"/>
+    <updated>2015-07-22T20:21:06+00:00</updated>
+    <id>http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress</id>
+    <content type="html"><![CDATA[<p>Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: <a href="http://octopress.org/docs.">http://octopress.org/docs.</a> The purpose of this article is to give a quick reference to commands which cover some basic workflows.</p>
+
+<p>The setup of Octopress is described here: <a href="http://octopress.org/docs/setup/">http://octopress.org/docs/setup/</a> and will not be covered in this article.</p>
+
+<h2>Editorial workflow</h2>
+
+<p>With a basic setup of Octopress, GitHub repo will have branches:</p>
+
+<ul>
+<li><code>source</code> branch for source code.</li>
+<li><code>master</code> branch for generated HTML code.</li>
+</ul>
+
+
+<p>Basic steps (including responsible participants):</p>
+
+<ul>
+<li>Create a new blog post with Octopress (content producer)</li>
+<li>Submit a pull request to <code>source</code> (content producer)</li>
+<li>Review and merge pull request (content reviewer)</li>
+<li>Generate HTML code from merged code and deploy to <code>master</code> with Octopress (automated by Continuous Integration server)</li>
+</ul>
+
+
+<h2>Create a new blog post</h2>
+
+<p>Now let&rsquo;s dig into the details of Octopress and start by creating a blog post stub including title, date, categories and others:
+<code>
+$ rake new_post["Blogging with Octopress"]
+mkdir -p source/_posts
+Creating new post: source/_posts/2015-07-22-blogging-with-octopress.markdown
+</code></p>
+
+<p>The next step is to edit generated markdown file:
+<code>
+$ vim source/_posts/2015-07-22-blogging-with-octopress.markdown
+</code>
+More details on editing a post can be found here: <a href="http://octopress.org/docs/blogging/.">http://octopress.org/docs/blogging/.</a></p>
+
+<p>After any update you can check what your freshly-baked post looks like:
+<code>
+$ rake preview
+</code></p>
+
+<p>As soon as a new post is ready, you just commit your code and submit a pull request:
+<code>
+$ git add source/_posts/2015-07-22-blogging-with-octopress.markdown
+$ git commit -m "New post: Blogging with Octopress"
+</code></p>
+
+<h2>Publish updated site</h2>
+
+<p>Let&rsquo;s assume you have a Continuous Integration server, which generates a new HTML code for your blog on update of the <code>source</code> branch and deploys it to the <code>master</code> afterwards.</p>
+
+<p>As soon as the source code is checked out by CI, you need to setup GitHub as a deployment option, generate the HTML code and deploy:
+<code>
+rake setup_github_pages["https://github.com/tispr/tispr.github.io"]
+rake generate
+rake deploy
+</code></p>
+
+<h3>Issues</h3>
+
+<h4>Unable to deploy updated content to master</h4>
+
+<p>You may experience issues with doing <code>rake deploy</code>:</p>
+
+<pre><code>## Pushing generated _deploy website
+To https://github.com/tispr/tispr.github.io
+ ! [rejected]        master -&gt; master (non-fast-forward)
+error: failed to push some refs to 'https://github.com/tispr/tispr.github.io'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Integrate the remote changes (e.g.
+hint: 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+Deploy does not work.
+</code></pre>
+
+<p>This may be related to the fact that the root directory of the source code and <code>_deploy</code> directory for generated HTML have different git repository branches set to <code>source</code> and <code>master</code> respectively. Thanks to StackOverflow a  workaround was found:</p>
+
+<pre><code>cd _deploy
+git pull origin master
+cd ..
+rake deploy
+</code></pre>
+
+<p>However, if you know a cleaner way to resolve this issue, please share in the comments.</p>
+
+<p>Happy blogging!</p>
+]]></content>
+  </entry>
+  
+</feed>
