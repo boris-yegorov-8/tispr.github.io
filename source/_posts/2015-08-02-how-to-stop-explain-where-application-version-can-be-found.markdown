@@ -3,13 +3,12 @@ layout: post
 title: "How to stop explain where application version can be found"
 date: 2015-08-02 14:30:19 -0700
 comments: true
-categories: iOS, Xcode, App Icon
+categories: iOS Xcode App Icon
 author: Andrei Pitsko
 ---
-How ofen do you face situation when your colleagues, QAs, business or marketing reported about issues in test builds, but they forgot to mention build number, application version. And when you ask about it, you should spend a lot of your time to explain what is build and app versions and where it can be found. Probably it is not so big problem when you have one-two build in month, but when you have a lot of different builds every week, it becomes very big issue
+How often do you face situation when your colleagues, QAs, business or marketing reported about issues in test builds, but they forgot to mention build number, application version. And when you ask about it, you should spend a lot of your time to explain what is build and app versions and where it can be found. Probably it is not so big problem when you have one-two build in month, but when you have a lot of different builds every week, it becomes very big issue
 
-For instance in [Tispr](http://tispr.com) we have develop build after each commit, every week build for internal testing, every week build for bussines and marketing departments
-(we will describe about our process in the next articles)
+For instance in [Tispr](http://tispr.com) we have develop build after each commit, every week build for internal testing, every week build for business and marketing departments
 
 Let's solve this issue and do build number and app version is maximum visible for users
 
@@ -82,8 +81,8 @@ convert -background '#0008' -fill white -gravity center -size ${width}x60 -point
 caption:"$TYPE_OF_BUILD $version($build)" ${income_icon_path} +swap -gravity south -composite ${outcome_icon_path}
 ```
 
-$TYPE_OF_BUILD - it is name of our build. you can remove it or set name of your build. in [Tispr](http://tispr.com) we use CI(go.cd) to setup 
-value of this variable. we are going to publish a few articles about our Continuous Integration and Continuous Delivery process in future
+$TYPE_OF_BUILD - it is name of our build. 
+And to complete this you might want to automate it and make as a step after building of the app in your Continuous Delivery process.
 
 *Mission completed*
 
