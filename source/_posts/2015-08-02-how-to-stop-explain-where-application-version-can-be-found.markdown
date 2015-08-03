@@ -19,7 +19,7 @@ But we are engineers, let's do it like engineers
 
 So it is our idea:
 
-{% img left images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/app_icon.png 100 100 'image' 'images' %}
+{% img left ({{ root_url }} /images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/app_icon.png 100 100 'image' 'images' %}
 **Develop** - it is type/name of build (in [Tispr](http://tispr.com) we have different type of builds, for instance: Develop build, Business build, etc),
 **1.0.1** - application version,
 **1023** - build number
@@ -28,8 +28,8 @@ So it is our idea:
 *Let's do coding:*
 
 Add new "Run Script" in xcode in "Build Phase"
-![application icon with overlay](images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_1.png)
-![application icon with overlay](images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_2.png)
+![application icon with overlay]({{ root_url }} /images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_1.png)
+![application icon with overlay]({{ root_url }} /images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_2.png)
 
 Get build number and application version from info plist in script
 ```
