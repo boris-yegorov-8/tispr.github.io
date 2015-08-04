@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>tispr Engineering</title>
+  <title>How to Display Build Number and Version on an iOS App Icon - tispr Engineering</title>
   <meta name="author" content="BuddyHopp, Inc.">
 
   
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://engineering.tispr.com/">
+  <link rel="canonical" href="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="tispr Engineering" type="application/atom+xml">
@@ -76,15 +76,12 @@
 </nav>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">How to Display Build Number and Version on an iOS App Icon</a></h1>
+      <h1 class="entry-title">How to Display Build Number and Version on an iOS App Icon</h1>
     
     
       <p class="meta">
@@ -100,7 +97,7 @@
   </header>
 
 
-  <div class="entry-content"><p>How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.</p>
+<div class="entry-content"><p>How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.</p>
 
 <p>-For instance at <a href="http://tispr.com">tispr</a> we build on each commit and every week for internal testing, and weekly demo&rsquo;s for business &amp; marketing departments.</p>
 
@@ -200,159 +197,58 @@ To complete the process you might want to consider automating it by making it pa
 <a href="http://habrahabr.ru/post/262667/">http://habrahabr.ru/post/262667/</a> <br/>
 <a href="http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon">http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon</a></p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andrei Pitsko</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-02T21:30:19+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:30 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/continuous-delivery/'>continuous delivery</a>, <a class='category' href='/blog/categories/ios/'>ios</a>
+  
+</span>
+
+
+    </p>
     
-      <h1 class="entry-title"><a href="/blog/2015/07/22/blogging-with-octopress/">Blogging With Octopress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-<time class='entry-date' datetime='2015-07-22T20:21:06+00:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>8:21 pm</span></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: <a href="http://octopress.org/docs.">http://octopress.org/docs.</a> The purpose of this article is to give a quick reference to commands which cover some basic workflows.</p>
-
-<p>The setup of Octopress is described here: <a href="http://octopress.org/docs/setup/">http://octopress.org/docs/setup/</a> and will not be covered in this article.</p>
-
-<h2>Editorial workflow</h2>
-
-<p>With a basic setup of Octopress, GitHub repo will have branches:</p>
-
-<ul>
-<li><code>source</code> branch for source code.</li>
-<li><code>master</code> branch for generated HTML code.</li>
-</ul>
-
-
-<p>Basic steps (including responsible participants):</p>
-
-<ul>
-<li>Create a new blog post with Octopress (content producer)</li>
-<li>Submit a pull request to <code>source</code> (content producer)</li>
-<li>Review and merge pull request (content reviewer)</li>
-<li>Generate HTML code from merged code and deploy to <code>master</code> with Octopress (automated by Continuous Integration server)</li>
-</ul>
-
-
-<h2>Create a new blog post</h2>
-
-<p>Now let&rsquo;s dig into the details of Octopress and start by creating a blog post stub including title, date, categories and others:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake new_post["Blogging with Octopress"]
-</span><span class='line'>mkdir -p source/_posts
-</span><span class='line'>Creating new post: source/_posts/2015-07-22-blogging-with-octopress.markdown</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The next step is to edit generated markdown file:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ vim source/_posts/2015-07-22-blogging-with-octopress.markdown</span></code></pre></td></tr></table></div></figure>
-
-
-<p>More details on editing a post can be found here: <a href="http://octopress.org/docs/blogging/.">http://octopress.org/docs/blogging/.</a></p>
-
-<p>After any update you can check what your freshly-baked post looks like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake preview</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As soon as a new post is ready, you just commit your code and submit a pull request:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add source/_posts/2015-07-22-blogging-with-octopress.markdown
-</span><span class='line'>$ git commit -m "New post: Blogging with Octopress"</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Publish updated site</h2>
-
-<p>Let&rsquo;s assume you have a Continuous Integration server, which generates a new HTML code for your blog on update of the <code>source</code> branch and deploys it to the <code>master</code> afterwards.</p>
-
-<p>As soon as the source code is checked out by CI, you need to setup GitHub as a deployment option, generate the HTML code and deploy:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages["https://github.com/tispr/tispr.github.io"]
-</span><span class='line'>rake generate
-</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Issues</h3>
-
-<h4>Unable to deploy updated content to master</h4>
-
-<p>You may experience issues with doing <code>rake deploy</code>:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>## Pushing generated _deploy website
-</span><span class='line'>To https://github.com/tispr/tispr.github.io
-</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
-</span><span class='line'>error: failed to push some refs to 'https://github.com/tispr/tispr.github.io'
-</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
-</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
-</span><span class='line'>hint: 'git pull ...') before pushing again.
-</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
-</span><span class='line'>Deploy does not work.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This may be related to the fact that the root directory of the source code and <code>_deploy</code> directory for generated HTML have different git repository branches set to <code>source</code> and <code>master</code> respectively. Thanks to StackOverflow a  workaround was found:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>cd _deploy
-</span><span class='line'>git pull origin master
-</span><span class='line'>cd ..
-</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However, if you know a cleaner way to resolve this issue, please share in the comments.</p>
-
-<p>Happy blogging!</p>
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/" data-via="tisprEng" data-counturl="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
 
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/22/blogging-with-octopress/" title="Previous Post: Blogging with Octopress">&laquo; Blogging with Octopress</a>
+      
+      
+    </p>
+  </footer>
+</article>
 
-    </article>
-  
-  <div class="pagination">
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
+  </section>
+
+</div>
+
 <aside class="sidebar">
   
     <section>
@@ -414,6 +310,7 @@ To complete the process you might want to consider automating it by making it pa
   
 </aside>
 
+
     </div>
   </div>
   <footer role="contentinfo"><p>
@@ -428,7 +325,10 @@ To complete the process you might want to consider automating it by making it pa
       var disqus_shortname = 'tispreng';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/';
+        var disqus_url = 'http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
