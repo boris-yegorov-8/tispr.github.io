@@ -8,12 +8,13 @@ author: Andrei Pitsko
 ---
 How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.
 
-For instance at [tispr](http://tispr.com) we build on each commit and every week for internal testing, and weekly demo's for business & marketing departments.
+For instance at [tispr](http://tispr.com) we do develop builds after each commit and every week for internal testing, and weekly demo's for business & marketing departments.
 
 Let's solve this issue, by creating a build number and app version with maximum visibility for users!
 
 Our solution: On the application icon.
-You must be thinking: A new icon for each new build?! Our answer is yes, why not.
+You must be thinking: A new icon for each new build?!
+We are engineers, let's do it like engineers
 
 Let's look at the how:
 
@@ -86,3 +87,7 @@ To complete the process you might want to consider automating it by making it pa
 *Mission completed*
 
 You can find the full script here: [Code](https://gist.github.com/Pitsko/993d81ac76e8d04ca1bc)
+
+This article was inspired by these posts: <br/>
+http://habrahabr.ru/post/262667/ <br/>
+http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon
