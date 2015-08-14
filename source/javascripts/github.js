@@ -6,7 +6,9 @@ var github = (function(){
     var i = 0, fragment = '', t = $(target)[0];
 
     for(i = 0; i < repos.length; i++) {
-      fragment += '<li><a href="'+repos[i].html_url+'">'+repos[i].name+'</a><p>'+escapeHtml(repos[i].description||'')+'</p></li>';
+      fragment += '<li><a href="'+repos[i].html_url+'">'+repos[i].name+'</a><p>'+escapeHtml(repos[i].description||'')+'</p>' +
+      '<iframe src="https://ghbtns.com/github-btn.html?user=' + repos[i].owner.login + '&repo=' + repos[i].name + '&type=star&count=true" frameborder="0" scrolling="0" width="170px" height="20px"></iframe>'+
+      '</li>';
     }
     t.innerHTML = fragment;
   }
