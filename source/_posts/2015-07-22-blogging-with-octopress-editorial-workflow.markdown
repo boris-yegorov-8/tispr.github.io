@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Blogging with Octopress"
+title: "Blogging with Octopress: Editorial workflow"
 date: 2015-07-22 13:21:06 -0700
 comments: true
 categories: Octopress
@@ -10,7 +10,6 @@ Octopress is an intuitive and simple blogging platform. The official documentati
 
 The setup of Octopress is described here: http://octopress.org/docs/setup/ and will not be covered in this article.
 
-## Editorial workflow
 With a basic setup of Octopress, GitHub repo will have branches:
 
 - `source` branch for source code.
