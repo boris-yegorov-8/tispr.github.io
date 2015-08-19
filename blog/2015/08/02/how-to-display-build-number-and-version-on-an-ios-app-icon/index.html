@@ -1,0 +1,367 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Display Build Number and Version on an iOS App Icon - tispr Engineering</title>
+  <meta name="author" content="BuddyHopp, Inc.">
+
+  
+  <meta name="description" content="How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="tispr Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-54620739-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">tispr Engineering</a></h1>
+  
+    <h2>Engineering Team blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="engineering.tispr.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://tispr.com/careers/" target="_blank">Careers</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Display Build Number and Version on an iOS App Icon</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-08-02T21:30:19+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:30 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.</p>
+
+<p>-For instance at <a href="http://tispr.com">tispr</a> we build on each commit and every week for internal testing, and weekly demo&rsquo;s for business &amp; marketing departments.</p>
+
+<p>Let&rsquo;s solve this issue, by creating a build number and app version with maximum visibility for users!</p>
+
+<p>Our solution: On the application icon.
+You must be thinking: A new icon for each new build?! Our answer is yes, why not.</p>
+
+<p>Let&rsquo;s look at the how:</p>
+
+<p><img class="left ({{ root_url }}" src="/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/app_icon.png" width="100" height="100" title="image" alt="images">
+<strong>Develop</strong> - it is type/name of build (if you have a different type of builds, for instance: Develop build, Business build, etc);
+<strong>1.0.1</strong> - application version;
+<strong>1023</strong> - build number</p>
+
+<p><br/>
+<em>Let&rsquo;s code:</em></p>
+
+<p>Add new &ldquo;Run Script&rdquo; in Xcode in &ldquo;Build Phase&rdquo;
+<img src="/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_1.png" alt="application icon with overlay" />
+<img src="/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_2.png" alt="application icon with overlay" /></p>
+
+<p>Get build number and application version from info plist in script</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${INFOPLIST_FILE}"`
+</span><span class='line'>build=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}"`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Let&rsquo;s imagine that we have a function with the name &ldquo;addOverlayInfo&rdquo; which has two parameters (name of incoming icon, name of icon that will be generated)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>function addOverlayInfo() {
+</span><span class='line'>    income_icon_name=$1
+</span><span class='line'>    outcome_icon_name=$2</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The result is something like this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>addOverlayInfo "iPhone-60@2x.png" "AppIcon60x60@2x.png"
+</span><span class='line'>addOverlayInfo "iPhone-60@3x.png" "AppIcon60x60@3x.png"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>where <code>iPhone-60@2x.png</code>, <code>iPhone-60@3x.png</code> - the names of the current application icons
+While the application builds the Xcode, the icons with the names <code>AppIcon60x60@2x.png</code>, <code>AppIcon60x60@3x.png</code> will be generated, if you use Images.xcassets.
+So, these names are used as second parameters in our calls.</p>
+
+<p>Let&rsquo;s find the icon path by name of the icon:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>income_icon_path=`find ${SRCROOT} -name $income_icon_name`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create a path to save the generated icon:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>outcome_icon_path="${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${outcome_icon_name}"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And now the most important moment: Generating icons with an overlay, including the build number and application version.</p>
+
+<p>Following a quick search on the internet we found that we will need these packages(imagemagick and ghostscript). Let&rsquo;s install them:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install imagemagick
+</span><span class='line'>brew install ghostscript</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To find the width of the incoming icon:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>width=`identify -format %w ${income_icon_path}`</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To generate the new icon with all the important information:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>convert -background '#0008' -fill white -gravity center -size ${width}x60 -pointsize 20\
+</span><span class='line'>caption:"$TYPE_OF_BUILD $version($build)" ${income_icon_path} +swap -gravity south -composite ${outcome_icon_path}</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>$TYPE_OF_BUILD</code> - The name of our build.
+To complete the process you might want to consider automating it by making it part of your Continuous Delivery process.</p>
+
+<p><em>Mission completed</em></p>
+
+<p>You can find the full script here: <a href="https://gist.github.com/Pitsko/993d81ac76e8d04ca1bc">Code</a></p>
+
+<p>This article was inspired by these posts: <br/>
+<a href="http://habrahabr.ru/post/262667/">http://habrahabr.ru/post/262667/</a> <br/>
+<a href="http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon">http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon</a></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Andrei Pitsko</span></span>
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-08-02T21:30:19+00:00'><span class='date'><span class='date-month'>Aug</span> <span class='date-day'>2</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>9:30 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/continuous-delivery/'>continuous delivery</a>, <a class='category' href='/blog/categories/ios/'>ios</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/" data-via="tisprEng" data-counturl="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/07/22/blogging-with-octopress-editorial-workflow/" title="Previous Post: Blogging with Octopress: Editorial workflow">&laquo; Blogging with Octopress: Editorial workflow</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/" title="Next Post: Running Docker in a GoCD Agent that runs in a Docker">Running Docker in a GoCD Agent that runs in a Docker &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/">Running Docker in a GoCD Agent That Runs in a Docker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">How to Display Build Number and Version on an iOS App Icon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/22/blogging-with-octopress-editorial-workflow/">Blogging With Octopress: Editorial Workflow</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/tispr">@tispr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'tispr',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="twitterOct">
+    <h1 style="margin-bottom: 0.4em"> Tweets </h1>
+    <a class="twitter-timeline"
+       data-dnt="true" href="https://twitter.com/tisprEng"
+       data-widget-id="627176829711880193">
+
+        Tweets by @tisprEng
+    </a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - BuddyHopp, Inc. -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tispreng';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/';
+        var disqus_url = 'http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
