@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Running Docker in GoCD Agent that runs in a Docker"
-date: 2015-08-13 19:08:27 -0700
+date: 2015-08-18 19:08:27 -0700
 comments: true
 categories: [GoCD, Docker, Continuous Delivery]
 
@@ -11,10 +11,10 @@ if you want to release often, maintain high quality of released products and hav
 [GoCD](http://www.go.cd/) is built on a pipelines concept described in [Continuous Delivery book](http://martinfowler.com/books/continuousDelivery.html).
 [Docker](https://www.docker.com/) greatly fits into the concept by solving the problem of packaging applications with all required dependencies and configuration into a standardized container unit.
 Common build pipeline will use a Dockerfile as an input, create image and publish it to a Docker registry.
-Common deploy pipeline will use a Docker registry image as an input and deploy it to proper environment when is updated.
+Common deploy pipeline will use a Docker registry image as an input and deploy it to proper environment when it is updated.
 
 GoCD in its basic setup is distributed and has Server and one or more Agents, which are running actual Jobs and Tasks.
-Server can be customized by adding new plugins, or by setting up a default configuration file with backed up pipelines.
+Server can be customized by adding new plugins, or by setting up backed up pipelines configuration.
 Agents may have different resources to run different types of jobs, e.g. separate Agents to build java and node.js projects.
 Same as for any other software deliverable, packaging GoCD Server and Agent into Docker containers simplifies their deployment and maintainability.
 One of the challenges in this setup will be running your existing Docker pipelines in an Agent, which is running in a Docker container.
