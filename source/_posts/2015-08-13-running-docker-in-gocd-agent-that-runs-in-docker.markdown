@@ -8,7 +8,7 @@ categories: [GoCD, Docker, Continuous Delivery]
 ---
 Setting up Continuous Delivery may be challenging. However, it is definitely worth time and resource investment,
 if you want to release often, maintain high quality of released products and have full control over the complete process.
-[GoCD](http://www.go.cd/) is build on a pipelines concept described in [Continuous Delivery book](http://martinfowler.com/books/continuousDelivery.html).
+[GoCD](http://www.go.cd/) is built on a pipelines concept described in [Continuous Delivery book](http://martinfowler.com/books/continuousDelivery.html).
 [Docker](https://www.docker.com/) greatly fits into the concept by solving the problem of packaging applications with all required dependencies and configuration into a standardized container unit.
 Common build pipeline will use a Dockerfile as an input, create image and publish it to a Docker registry.
 Common deploy pipeline will use a Docker registry image as an input and deploy it to proper environment when is updated.
