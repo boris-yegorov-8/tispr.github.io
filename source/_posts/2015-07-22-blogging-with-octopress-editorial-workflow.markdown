@@ -5,6 +5,8 @@ date: 2015-07-22 13:21:06 -0700
 comments: true
 categories: Octopress
 author: Alex Voitau
+github-url: https://github.com/voitau
+twitter-url: https://twitter.com/voitau
 ---
 Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: http://octopress.org/docs. The purpose of this article is to give a quick reference to commands which cover some basic workflows. 
 
