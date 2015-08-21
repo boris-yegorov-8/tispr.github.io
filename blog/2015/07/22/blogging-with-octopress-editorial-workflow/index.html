@@ -1,0 +1,390 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Blogging With Octopress: Editorial Workflow - tispr Engineering</title>
+  <meta name="author" content="BuddyHopp, Inc.">
+
+  
+  <meta name="description" content="Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: http://octopress.org/ &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress-editorial-workflow/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="tispr Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-54620739-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">tispr Engineering</a></h1>
+  
+    <h2>Engineering Team blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="engineering.tispr.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://tispr.com/careers/" target="_blank">Careers</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Blogging With Octopress: Editorial Workflow</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-07-22T20:21:06+00:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>8:21 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Octopress is an intuitive and simple blogging platform. The official documentation includes numerous examples and tutorials: <a href="http://octopress.org/docs.">http://octopress.org/docs.</a> The purpose of this article is to give a quick reference to commands which cover some basic workflows.</p>
+
+<p>The setup of Octopress is described here: <a href="http://octopress.org/docs/setup/">http://octopress.org/docs/setup/</a> and will not be covered in this article.</p>
+
+<p>With a basic setup of Octopress, GitHub repo will have branches:</p>
+
+<ul>
+<li><code>source</code> branch for source code.</li>
+<li><code>master</code> branch for generated HTML code.</li>
+</ul>
+
+
+<p>Basic steps (including responsible participants):</p>
+
+<ul>
+<li>Create a new blog post with Octopress (content producer)</li>
+<li>Submit a pull request to <code>source</code> (content producer)</li>
+<li>Review and merge pull request (content reviewer)</li>
+<li>Generate HTML code from merged code and deploy to <code>master</code> with Octopress (automated by Continuous Integration server)</li>
+</ul>
+
+
+<h2>Create a new blog post</h2>
+
+<p>Now let&rsquo;s dig into the details of Octopress and start by creating a blog post stub including title, date, categories and others:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake new_post["Blogging with Octopress"]
+</span><span class='line'>mkdir -p source/_posts
+</span><span class='line'>Creating new post: source/_posts/2015-07-22-blogging-with-octopress.markdown</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The next step is to edit generated markdown file:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ vim source/_posts/2015-07-22-blogging-with-octopress.markdown</span></code></pre></td></tr></table></div></figure>
+
+
+<p>More details on editing a post can be found here: <a href="http://octopress.org/docs/blogging/.">http://octopress.org/docs/blogging/.</a></p>
+
+<p>After any update you can check what your freshly-baked post looks like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake preview</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As soon as a new post is ready, you just commit your code and submit a pull request:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git add source/_posts/2015-07-22-blogging-with-octopress.markdown
+</span><span class='line'>$ git commit -m "New post: Blogging with Octopress"</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Publish updated site</h2>
+
+<p>Let&rsquo;s assume you have a Continuous Integration server, which generates a new HTML code for your blog on update of the <code>source</code> branch and deploys it to the <code>master</code> afterwards.</p>
+
+<p>As soon as the source code is checked out by CI, you need to setup GitHub as a deployment option, generate the HTML code and deploy:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>rake setup_github_pages["https://github.com/tispr/tispr.github.io"]
+</span><span class='line'>rake generate
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Issues</h3>
+
+<h4>Unable to deploy updated content to master</h4>
+
+<p>You may experience issues with doing <code>rake deploy</code>:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>## Pushing generated _deploy website
+</span><span class='line'>To https://github.com/tispr/tispr.github.io
+</span><span class='line'> ! [rejected]        master -&gt; master (non-fast-forward)
+</span><span class='line'>error: failed to push some refs to 'https://github.com/tispr/tispr.github.io'
+</span><span class='line'>hint: Updates were rejected because the tip of your current branch is behind
+</span><span class='line'>hint: its remote counterpart. Integrate the remote changes (e.g.
+</span><span class='line'>hint: 'git pull ...') before pushing again.
+</span><span class='line'>hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</span><span class='line'>Deploy does not work.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This may be related to the fact that the root directory of the source code and <code>_deploy</code> directory for generated HTML have different git repository branches set to <code>source</code> and <code>master</code> respectively. Thanks to StackOverflow a  workaround was found:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>cd _deploy
+</span><span class='line'>git pull origin master
+</span><span class='line'>cd ..
+</span><span class='line'>rake deploy</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, if you know a cleaner way to resolve this issue, please share in the comments.</p>
+
+<p>Happy blogging!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+<span class="byline author vcard">Posted by <span class="fn">Alex Voitau</span>
+    
+      <span class="fn">
+        <a href="https://github.com/voitau">github</a>
+      </span>
+    
+    
+      <span class="fn">
+        <a href="https://twitter.com/voitau">twitter</a>
+      </span>
+    
+</span>
+
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-07-22T20:21:06+00:00'><span class='date'><span class='date-month'>Jul</span> <span class='date-day'>22</span><span class='date-suffix'>nd</span>, <span class='date-year'>2015</span></span> <span class='time'>8:21 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress-editorial-workflow/" data-via="tisprEng" data-counturl="http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress-editorial-workflow/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+      
+        <a class="basic-alignment right" href="/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/" title="Next Post: How to display build number and version on an iOS app icon">How to display build number and version on an iOS app icon &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/">Running Docker in a GoCD Agent That Runs in a Docker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">How to Display Build Number and Version on an iOS App Icon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/22/blogging-with-octopress-editorial-workflow/">Blogging With Octopress: Editorial Workflow</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/tispr">@tispr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'tispr',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="twitterOct">
+    <h1 style="margin-bottom: 0.4em"> Tweets </h1>
+    <a class="twitter-timeline"
+       data-dnt="true" href="https://twitter.com/tisprEng"
+       data-widget-id="627176829711880193">
+
+        Tweets by @tisprEng
+    </a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - BuddyHopp, Inc. -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tispreng';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress-editorial-workflow/';
+        var disqus_url = 'http://engineering.tispr.com/blog/2015/07/22/blogging-with-octopress-editorial-workflow/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
