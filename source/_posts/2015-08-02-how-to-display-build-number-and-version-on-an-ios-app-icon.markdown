@@ -5,6 +5,8 @@ date: 2015-08-02 14:30:19 -0700
 comments: true
 categories: [iOS, Continuous Delivery]
 author: Andrei Pitsko
+github-url: https://github.com/Pitsko
+twitter-url: https://twitter.com/AndreyPitsko
 ---
 How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.
 

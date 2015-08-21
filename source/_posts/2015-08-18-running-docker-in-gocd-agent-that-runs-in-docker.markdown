@@ -5,6 +5,8 @@ date: 2015-08-18 19:08:27 -0700
 comments: true
 categories: [GoCD, Docker, Continuous Delivery]
 author: Alex Voitau
+github-url: https://github.com/voitau
+twitter-url: https://twitter.com/voitau
 ---
 Setting up Continuous Delivery may be challenging. However, it is definitely worth the time and resource investment,
 if you want to release often, maintain a high quality of released products and have full control over the complete process.
