@@ -9,23 +9,23 @@ github-url: https://github.com/Pitsko
 twitter-url: https://twitter.com/AndreyPitsko
 ---
 
-In one very sunny and nice day we got the next requirement from our Product Owner: "*I want to change a bit design of our application, to make application more beautiful and exciting*". 
+One day, our product owner requested the following: "*I want to make our application more exciting and visually attractive, by slightly chaging the design*". 
 
-We understood out task:"we should do rounded corners over UITabBar"
+Our task:"To create rounded corners over the UITabBar"
 ![goal in detail]({{ root_url }} /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/goal2.png)
 
 Let's code
 
-First my idea: we can set cornerRadius in all our controllers of UITabBarController:
+The first approach: Set cornerRadius in all our the controllers of the UITabBarController:
 ```
     view.layer.cornerRadius = 8.0
 
 ```
 
-But result was expected. We got rounded corners on top of my views as well:
+But the result was as expected: Rounded corners on top of my views as well:
 ![eror one]({{ root_url }} /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_1.png)
 
-Second my idea: we can try to use masks
+The second attempt: Use masks
 ```
         let roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
         let maskLayer = CAShapeLayer()
@@ -35,8 +35,8 @@ Second my idea: we can try to use masks
 
 ```
 
-After some checking I understood that each of controller in our UITabBarController is UINavigationController. As result rounded corners disappear after pushing any next controller.
-So we need to apply it for all main views. I decided to create extension of UIView and use it where it is required
+After some research, we understood that each controller in our UITabBarController is a UINavigationController. As result, rounded corners disappear after pushing any next controller.
+The third try: We applied it for all main views. We created an extension of UIView and used it where it is required.
 
 ```
 extension UIView {
@@ -46,11 +46,11 @@ extension UIView {
 }
 ```
 
-Cool, Seems it works. But again, after testing I understood that it didn't work with UIScrollView, because during scrolling you can see black area.
+Cool, seems it worked! However, after testing we understood that it didn't work with the UIScrollView, since you can see a black area while scrolling.
 
 ![eror two]({{ root_url }} /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_2.png)
 
-ok, than I decided to recalculate mask path for UIScrollView:
+Finally, we decided to recalculate the mask path for UIScrollView:
 ```
 	public override func layoutSublayersOfLayer(layer: CALayer!) {
         super.layoutSublayersOfLayer(layer)
@@ -60,11 +60,11 @@ ok, than I decided to recalculate mask path for UIScrollView:
     }
 ```
 
-and yes, It is final solution. I didn't find any bugs and issues. 
+Annd yes, it worked! No bugs or issues. 
 
-*Mission completed*
+*Mission complete*
 
 
-**We sure that this solution works, but probably there is some way to improve it. Let me know**
+**This is a solid solution, however if you find a way to improve it. Don't hesitate to let us know.**
 
 
