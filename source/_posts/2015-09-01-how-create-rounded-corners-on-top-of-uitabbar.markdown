@@ -60,7 +60,7 @@ Finally, we decided to recalculate the mask path for UIScrollView:
     }
 ```
 
-Annd yes, it worked! No bugs or issues. 
+And yes, it worked! No bugs or issues. 
 
 *Mission complete*
 
