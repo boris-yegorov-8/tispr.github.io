@@ -9,9 +9,9 @@ github-url: https://github.com/Pitsko
 twitter-url: https://twitter.com/AndreyPitsko
 ---
 
-One day, our product owner requested the following: "*I want to make our application more exciting and visually attractive, by slightly chaging the design*". 
+One day, our product owner requested the following: "*I want to make our application more exciting and visually attractive, by slightly changing the design*". 
 
-Our task:"To create rounded corners over the UITabBar"
+Our task:"Create rounded corners over the UITabBar"
 ![goal in detail]({{ root_url }} /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/goal2.png)
 
 Let's code
