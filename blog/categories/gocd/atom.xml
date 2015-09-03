@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Gocd | tispr Engineering]]></title>
+  <link href="http://engineering.tispr.com/blog/categories/gocd/atom.xml" rel="self"/>
+  <link href="http://engineering.tispr.com/"/>
+  <updated>2015-09-03T21:17:20+00:00</updated>
+  <id>http://engineering.tispr.com/</id>
+  <author>
+    <name><![CDATA[BuddyHopp, Inc.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Running Docker in a GoCD Agent That Runs in a Docker]]></title>
+    <link href="http://engineering.tispr.com/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/"/>
+    <updated>2015-08-19T02:08:27+00:00</updated>
+    <id>http://engineering.tispr.com/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker</id>
+    <content type="html"><![CDATA[<p>Setting up Continuous Delivery may be challenging. However, it is definitely worth the time and resource investment,
+if you want to release often, maintain a high quality of released products and have full control over the complete process.
+<a href="http://www.go.cd/">GoCD</a> is built on a pipelines concept described in <a href="http://martinfowler.com/books/continuousDelivery.html">Continuous Delivery book</a>.
+<a href="https://www.docker.com/">Docker</a> greatly fits into the concept, because it solves the problem of packaging applications with all required dependencies and configurations into a standardized container unit.
+A common build pipeline will use a Dockerfile as an input, create an image and publish it to a Docker registry.
+A common deploy pipeline will use a Docker registry image as an input and deploy it to a proper environment when it is updated.</p>
+
+<p>GoCD in its basic setup is distributed and has a Server and one or more Agents, which are running actual Jobs and Tasks.
+The Server can be customized by adding new plugins, or by setting up a backed-up pipeline configuration.
+The Agents may have different resources to run different types of jobs, i.e. separate Agents to build java and node.js projects.
+Same as for any other software deliverable, packaging GoCD Server and Agents into Docker containers simplifies their deployment and maintainability.
+One of the challenges in this setup is running your existing Docker pipelines in an Agent, which is running in a Docker container.</p>
+
+<p>So, in brief, you may find this article interesting, if you:</p>
+
+<ul>
+<li>use GoCD;</li>
+<li>use Docker;</li>
+<li>use GoCD to build Docker images;</li>
+<li>run GoCD agents in a Docker.</li>
+</ul>
+
+
+<p>The most important part of this setup is a <a href="https://hub.docker.com/r/jpetazzo/dind/">Docker-in-Docker</a>, which we use as a base image:
+<code>
+FROM jpetazzo/dind
+</code></p>
+
+<p>To run a GoCD agent in a Docker, we need to run several processes in one container. For this let&rsquo;s use <a href="http://docs.docker.com/articles/using_supervisord/">supervisor</a>:
+<code>
+RUN apt-get -y install supervisor
+ADD supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["/usr/bin/supervisord"]
+</code></p>
+
+<p>The configuration file for the supervisor will contain a section per each process, including the supervisor itself:</p>
+
+<pre><code>[supervisord]
+nodaemon=true
+
+[program:docker]
+priority=10
+command=wrapdocker
+
+[program:gocdagent]
+priority=20
+command=/bin/bash -c "/etc/init.d/go-agent start"
+</code></pre>
+
+<p>Some additional tweaks may be required to run your GoCD agent properly. One of them is setting <code>GO_SERVER</code> in your agent configuration. Let&rsquo;s assume that it is available as an environment variable with the same name:
+<code>
+echo export GO_SERVER=$GO_SERVER &gt;&gt; /etc/default/go-agent
+</code></p>
+
+<p>Another update will allow to run <code>sudo docker</code> without an interactive password prompt:
+<code>
+echo go ALL=NOPASSWD: /usr/bin/docker &gt;&gt; /etc/sudoers
+</code></p>
+
+<p>And the complete GoCD command will look like this:
+<code>
+command=/bin/bash -c "echo export GO_SERVER=$GO_SERVER &gt;&gt; /etc/default/go-agent &amp;&amp; echo go ALL=NOPASSWD: /usr/bin/docker &gt;&gt; /etc/sudoers &amp;&amp; /etc/init.d/go-agent start"
+</code></p>
+
+<p>You can check the complete <a href="https://github.com/tispr/docker-gocd/tree/master/gocd-agent-dind/">Dockerfile</a> and start playing
+with existing image by pulling <a href="https://hub.docker.com/r/tispr/gocd-agent-dind/">tispr/gocd-agent-dind</a>:
+<code>
+docker pull tispr/gocd-agent-dind
+</code></p>
+
+<p>Now nothing stops you from setting up a GoCD pipeline to manage dockerized GoCD Server and GoCD Agents.</p>
+
+<h2>References</h2>
+
+<ul>
+<li>Docker in Docker: <a href="https://github.com/jpetazzo/dind/">https://github.com/jpetazzo/dind/</a></li>
+<li>Go Continuous Delivery: <a href="http://www.go.cd/">http://www.go.cd/</a></li>
+<li>Jenkins DIND: <a href="https://github.com/killercentury/docker-jenkins-dind">https://github.com/killercentury/docker-jenkins-dind</a></li>
+</ul>
+
+]]></content>
+  </entry>
+  
+</feed>

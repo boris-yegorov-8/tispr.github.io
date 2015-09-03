@@ -1,0 +1,355 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>How to Create Rounded Corners on a Top of UITabBar - tispr Engineering</title>
+  <meta name="author" content="BuddyHopp, Inc.">
+
+  
+  <meta name="description" content="One day, our product owner requested the following: &ldquo;I want to make our application more exciting and visually attractive, by slightly changing &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="tispr Engineering" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="/javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-54620739-6']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">tispr Engineering</a></h1>
+  
+    <h2>Engineering Team blog</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="sitesearch" value="engineering.tispr.com">
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="http://tispr.com/careers/" target="_blank">Careers</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">How to Create Rounded Corners on a Top of UITabBar</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+<time class='entry-date' datetime='2015-09-03T22:41:58+00:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>10:41 pm</span></time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>One day, our product owner requested the following: &ldquo;<em>I want to make our application more exciting and visually attractive, by slightly changing the design</em>&rdquo;.</p>
+
+<p>Our task:&ldquo;Create rounded corners over the UITabBar&rdquo;
+<img src="/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/goal2.png" alt="goal in detail" /></p>
+
+<p>Let&rsquo;s code</p>
+
+<p>The first approach: Set cornerRadius in all our the controllers of the UITabBarController:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>view.layer.cornerRadius = 8.0
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the result was as expected: Rounded corners on top of my views as well:
+<img src="/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_1.png" alt="eror one" /></p>
+
+<p>The second attempt: Use masks</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>    let roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+</span><span class='line'>    let maskLayer = CAShapeLayer()
+</span><span class='line'>    maskLayer.frame = bounds
+</span><span class='line'>    maskLayer.path = roundedPath.CGPath
+</span><span class='line'>    layer.mask = maskLayer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After some research, we understood that each controller in our UITabBarController is a UINavigationController. As result, rounded corners disappear after pushing any next controller.
+The third try: We applied it for all main views. We created an extension of UIView and used it where it is required.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>extension UIView {
+</span><span class='line'>    func makeCornerRadius(radius: CGFloat = 8, corners: UIRectCorner) {
+</span><span class='line'>      ...
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Cool, seems it worked! However, after testing we understood that it didn&rsquo;t work with the UIScrollView, since you can see a black area while scrolling.</p>
+
+<p><img src="/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_2.png" alt="eror two" /></p>
+
+<p>Finally, we decided to recalculate the mask path for UIScrollView:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>public override func layoutSublayersOfLayer(layer: CALayer!) {
+</span><span class='line'>    super.layoutSublayersOfLayer(layer)
+</span><span class='line'>    if let maskLayer = layer.mask as? CAShapeLayer {
+</span><span class='line'>        maskLayer.path = UIBezierPath(roundedRect: layer.bounds, byRoundingCorners: UIRectCorner.BottomRight | .BottomLeft, cornerRadii: CGSize(width: 8.0, height: 8.0)).CGPath
+</span><span class='line'>    }
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And yes, it worked! No bugs or issues.</p>
+
+<p><em>Mission complete</em></p>
+
+<p><strong>This solution worked for us. If you have any alternatives, please leave in comments.</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+
+<span class="byline author vcard">Posted by <span class="fn">Andrei Pitsko</span>
+    
+      <span class="fn">
+        <a href="https://github.com/Pitsko">github</a>
+      </span>
+    
+    
+      <span class="fn">
+        <a href="https://twitter.com/AndreyPitsko">twitter</a>
+      </span>
+    
+</span>
+
+
+      
+
+
+
+
+<time class='entry-date' datetime='2015-09-03T22:41:58+00:00'><span class='date'><span class='date-month'>Sep</span> <span class='date-day'>3</span><span class='date-suffix'>rd</span>, <span class='date-year'>2015</span></span> <span class='time'>10:41 pm</span></time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/ios/'>ios</a>, <a class='category' href='/blog/categories/swift/'>swift</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/" data-via="tisprEng" data-counturl="http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/" title="Previous Post: Running Docker in a GoCD Agent that runs in a Docker">&laquo; Running Docker in a GoCD Agent that runs in a Docker</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/">How to Create Rounded Corners on a Top of UITabBar</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/19/running-docker-in-gocd-agent-that-runs-in-docker/">Running Docker in a GoCD Agent That Runs in a Docker</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/">How to Display Build Number and Version on an iOS App Icon</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2015/07/22/blogging-with-octopress-editorial-workflow/">Blogging With Octopress: Editorial Workflow</a>
+      </li>
+    
+  </ul>
+</section>
+
+<section>
+  <h1>GitHub Repos</h1>
+  <ul id="gh_repos">
+    <li class="loading">Status updating...</li>
+  </ul>
+  
+  <a href="https://github.com/tispr">@tispr</a> on GitHub
+  
+  <script type="text/javascript">
+    $(document).ready(function(){
+        if (!window.jXHR){
+            var jxhr = document.createElement('script');
+            jxhr.type = 'text/javascript';
+            jxhr.src = '/javascripts/libs/jXHR.js';
+            var s = document.getElementsByTagName('script')[0];
+            s.parentNode.insertBefore(jxhr, s);
+        }
+
+        github.showRepos({
+            user: 'tispr',
+            count: 0,
+            skip_forks: true,
+            target: '#gh_repos'
+        });
+    });
+  </script>
+  <script src="/javascripts/github.js" type="text/javascript"> </script>
+</section>
+
+
+<section class="twitterOct">
+    <h1 style="margin-bottom: 0.4em"> Tweets </h1>
+    <a class="twitter-timeline"
+       data-dnt="true" href="https://twitter.com/tisprEng"
+       data-widget-id="627176829711880193">
+
+        Tweets by @tisprEng
+    </a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</section>
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - BuddyHopp, Inc. -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'tispreng';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/';
+        var disqus_url = 'http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners--a-on-top-of-uitabbar/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
