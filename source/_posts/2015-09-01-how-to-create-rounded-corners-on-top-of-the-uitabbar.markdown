@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How to create rounded corners on a top of  UITabBar"
+title: "How to create rounded corners on top of the UITabBar"
 date: 2015-09-03 15:41:58 -0700
 comments: true
 categories: [Swift, iOS]
