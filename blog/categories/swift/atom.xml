@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Swift | tispr Engineering]]></title>
+  <link href="http://engineering.tispr.com/blog/categories/swift/atom.xml" rel="self"/>
+  <link href="http://engineering.tispr.com/"/>
+  <updated>2017-01-23T23:12:22+00:00</updated>
+  <id>http://engineering.tispr.com/</id>
+  <author>
+    <name><![CDATA[BuddyHopp, Inc.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Create Rounded Corners on Top of the UITabBar]]></title>
+    <link href="http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners-on-top-of-the-uitabbar/"/>
+    <updated>2015-09-03T22:41:58+00:00</updated>
+    <id>http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners-on-top-of-the-uitabbar</id>
+    <content type="html"><![CDATA[<p>One day, our product owner requested the following: &ldquo;<em>I want to make our application more exciting and visually attractive, by slightly changing the design</em>&rdquo;.</p>
+
+<p>Our task:&ldquo;Create rounded corners over the UITabBar&rdquo;
+<img src="%20/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/goal2.png" alt="goal in detail" /></p>
+
+<p>Let&rsquo;s code</p>
+
+<p>The first approach: Set cornerRadius in all our the controllers of the UITabBarController:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>view.layer.cornerRadius = 8.0&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>But the result was as expected: Rounded corners on top of my views as well:
+</span><span class='line'>![eror one]( /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_1.png)
+</span><span class='line'>
+</span><span class='line'>The second attempt: Use masks
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;    let roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+</span><span class='line'>let maskLayer = CAShapeLayer()
+</span><span class='line'>maskLayer.frame = bounds
+</span><span class='line'>maskLayer.path = roundedPath.CGPath
+</span><span class='line'>layer.mask = maskLayer
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>After some research, we understood that each controller in our UITabBarController is a UINavigationController. As result, rounded corners disappear after pushing any next controller.
+</span><span class='line'>The third try: We applied it for all main views. We created an extension of UIView and used it where it is required.
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;extension UIView {
+</span><span class='line'>func makeCornerRadius(radius: CGFloat = 8, corners: UIRectCorner) {
+</span><span class='line'>    &hellip;
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Cool, seems it worked! However, after testing we understood that it didn&rsquo;t work with the UIScrollView, since you can see a black area while scrolling.</p>
+
+<p><img src="%20/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_2.png" alt="eror two" /></p>
+
+<p>Finally, we decided to recalculate the mask path for UIScrollView:
+<code>
+    public override func layoutSublayersOfLayer(layer: CALayer!) {
+        super.layoutSublayersOfLayer(layer)
+        if let maskLayer = layer.mask as? CAShapeLayer {
+            maskLayer.path = UIBezierPath(roundedRect: layer.bounds, byRoundingCorners: UIRectCorner.BottomRight | .BottomLeft, cornerRadii: CGSize(width: 8.0, height: 8.0)).CGPath
+        }
+    }
+</code></p>
+
+<p>And yes, it worked! No bugs or issues.</p>
+
+<p><em>Mission complete</em></p>
+
+<p><strong>This solution worked for us. If you have any alternatives, please leave in comments.</strong></p>
+]]></content>
+  </entry>
+  
+</feed>
