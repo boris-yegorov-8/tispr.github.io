@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Ios | tispr Engineering]]></title>
+  <link href="http://engineering.tispr.com/blog/categories/ios/atom.xml" rel="self"/>
+  <link href="http://engineering.tispr.com/"/>
+  <updated>2017-01-23T23:23:06+00:00</updated>
+  <id>http://engineering.tispr.com/</id>
+  <author>
+    <name><![CDATA[BuddyHopp, Inc.]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[How to Create Rounded Corners on Top of the UITabBar]]></title>
+    <link href="http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners-on-top-of-the-uitabbar/"/>
+    <updated>2015-09-03T22:41:58+00:00</updated>
+    <id>http://engineering.tispr.com/blog/2015/09/03/how-to-create-rounded-corners-on-top-of-the-uitabbar</id>
+    <content type="html"><![CDATA[<p>One day, our product owner requested the following: &ldquo;<em>I want to make our application more exciting and visually attractive, by slightly changing the design</em>&rdquo;.</p>
+
+<p>Our task:&ldquo;Create rounded corners over the UITabBar&rdquo;
+<img src="%20/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/goal2.png" alt="goal in detail" /></p>
+
+<p>Let&rsquo;s code</p>
+
+<p>The first approach: Set cornerRadius in all our the controllers of the UITabBarController:
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>view.layer.cornerRadius = 8.0&lt;/p&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>But the result was as expected: Rounded corners on top of my views as well:
+</span><span class='line'>![eror one]( /images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_1.png)
+</span><span class='line'>
+</span><span class='line'>The second attempt: Use masks
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;    let roundedPath = UIBezierPath(roundedRect: bounds, byRoundingCorners: corners, cornerRadii: CGSize(width: radius, height: radius))
+</span><span class='line'>let maskLayer = CAShapeLayer()
+</span><span class='line'>maskLayer.frame = bounds
+</span><span class='line'>maskLayer.path = roundedPath.CGPath
+</span><span class='line'>layer.mask = maskLayer
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;pre&gt;&lt;code&gt;
+</span><span class='line'>After some research, we understood that each controller in our UITabBarController is a UINavigationController. As result, rounded corners disappear after pushing any next controller.
+</span><span class='line'>The third try: We applied it for all main views. We created an extension of UIView and used it where it is required.
+</span><span class='line'>&lt;/code&gt;&lt;/pre&gt;
+</span><span class='line'>
+</span><span class='line'>&lt;p&gt;extension UIView {
+</span><span class='line'>func makeCornerRadius(radius: CGFloat = 8, corners: UIRectCorner) {
+</span><span class='line'>    &hellip;
+</span><span class='line'>}
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure></p>
+
+<p>Cool, seems it worked! However, after testing we understood that it didn&rsquo;t work with the UIScrollView, since you can see a black area while scrolling.</p>
+
+<p><img src="%20/images/2015-09-01-how-create-rounded-corners-on-top-of-uitabbar/step_2.png" alt="eror two" /></p>
+
+<p>Finally, we decided to recalculate the mask path for UIScrollView:
+<code>
+    public override func layoutSublayersOfLayer(layer: CALayer!) {
+        super.layoutSublayersOfLayer(layer)
+        if let maskLayer = layer.mask as? CAShapeLayer {
+            maskLayer.path = UIBezierPath(roundedRect: layer.bounds, byRoundingCorners: UIRectCorner.BottomRight | .BottomLeft, cornerRadii: CGSize(width: 8.0, height: 8.0)).CGPath
+        }
+    }
+</code></p>
+
+<p>And yes, it worked! No bugs or issues.</p>
+
+<p><em>Mission complete</em></p>
+
+<p><strong>This solution worked for us. If you have any alternatives, please leave in comments.</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How to Display Build Number and Version on an iOS App Icon]]></title>
+    <link href="http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon/"/>
+    <updated>2015-08-02T21:30:19+00:00</updated>
+    <id>http://engineering.tispr.com/blog/2015/08/02/how-to-display-build-number-and-version-on-an-ios-app-icon</id>
+    <content type="html"><![CDATA[<p>How often do you face the situation where your colleagues, QA, business or marketing report issues in test builds, but they forget to mention a build number or application version? And when they ask you about it, you spend a lot of time explaining the build number and application version, and where it can be found? When you have one to two builds per month the issue is not very big, but when you have a lot of different builds per week, it becomes cumbersome.</p>
+
+<p>-For instance at <a href="http://tispr.com">tispr</a> we build on each commit and every week for internal testing, and weekly demo&rsquo;s for business &amp; marketing departments.</p>
+
+<p>Let&rsquo;s solve this issue, by creating a build number and app version with maximum visibility for users!</p>
+
+<p>Our solution: On the application icon.
+You must be thinking: A new icon for each new build?! Our answer is yes, why not.</p>
+
+<p>Let&rsquo;s look at the how:</p>
+
+<p><img class="left ({{ root_url }}" src="/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/app_icon.png" width="100" height="100" title="&lsquo;image&rsquo; &lsquo;images&rsquo;" >
+<strong>Develop</strong> - it is type/name of build (if you have a different type of builds, for instance: Develop build, Business build, etc);
+<strong>1.0.1</strong> - application version;
+<strong>1023</strong> - build number</p>
+
+<p><br/>
+<em>Let&rsquo;s code:</em></p>
+
+<p>Add new &ldquo;Run Script&rdquo; in Xcode in &ldquo;Build Phase&rdquo;
+<img src="%20/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_1.png" alt="application icon with overlay" />
+<img src="%20/images/2015-08-02-how-to-stop-explain-where-application-version-can-be-found/build_phase_2.png" alt="application icon with overlay" /></p>
+
+<p>Get build number and application version from info plist in script
+<code>
+version=`/usr/libexec/PlistBuddy -c "Print CFBundleShortVersionString" "${INFOPLIST_FILE}"`
+build=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${INFOPLIST_FILE}"`
+</code></p>
+
+<p>Let&rsquo;s imagine that we have a function with the name &ldquo;addOverlayInfo&rdquo; which has two parameters (name of incoming icon, name of icon that will be generated)
+<code>
+function addOverlayInfo() {
+    income_icon_name=$1
+    outcome_icon_name=$2
+</code></p>
+
+<p>The result is something like this:
+<code>
+addOverlayInfo "iPhone-60@2x.png" "AppIcon60x60@2x.png"
+addOverlayInfo "iPhone-60@3x.png" "AppIcon60x60@3x.png"
+</code></p>
+
+<p>where <code>iPhone-60@2x.png</code>, <code>iPhone-60@3x.png</code> - the names of the current application icons
+While the application builds the Xcode, the icons with the names <code>AppIcon60x60@2x.png</code>, <code>AppIcon60x60@3x.png</code> will be generated, if you use Images.xcassets.
+So, these names are used as second parameters in our calls.</p>
+
+<p>Let&rsquo;s find the icon path by name of the icon:
+<code>
+income_icon_path=`find ${SRCROOT} -name $income_icon_name`
+</code></p>
+
+<p>Create a path to save the generated icon:
+<code>
+outcome_icon_path="${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${outcome_icon_name}"
+</code></p>
+
+<p>And now the most important moment: Generating icons with an overlay, including the build number and application version.</p>
+
+<p>Following a quick search on the internet we found that we will need these packages(imagemagick and ghostscript). Let&rsquo;s install them:
+<code>
+brew install imagemagick
+brew install ghostscript
+</code>
+To find the width of the incoming icon:
+<code>
+width=`identify -format %w ${income_icon_path}`
+</code></p>
+
+<p>To generate the new icon with all the important information:
+<code>
+convert -background '#0008' -fill white -gravity center -size ${width}x60 -pointsize 20\
+caption:"$TYPE_OF_BUILD $version($build)" ${income_icon_path} +swap -gravity south -composite ${outcome_icon_path}
+</code></p>
+
+<p><code>$TYPE_OF_BUILD</code> - The name of our build.
+To complete the process you might want to consider automating it by making it part of your Continuous Delivery process.</p>
+
+<p><em>Mission completed</em></p>
+
+<p>You can find the full script here: <a href="https://gist.github.com/Pitsko/993d81ac76e8d04ca1bc">Code</a></p>
+
+<p>This article was inspired by these posts: <br/>
+<a href="http://habrahabr.ru/post/262667/">http://habrahabr.ru/post/262667/</a> <br/>
+<a href="http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon">http://merowing.info/2013/03/overlaying-application-version-on-top-of-your-icon</a></p>
+]]></content>
+  </entry>
+  
+</feed>
